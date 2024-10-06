@@ -4,11 +4,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int x = parseArg();
-        if (x != 0) {
-            printTable(x);
-        } else {
-            System.out.println("Only integer numbers between 1 and 32");
+        int tableSize = parseArg();
+        if (tableSize != -1) {
+            printTable(tableSize);
         }
     }
 
@@ -18,8 +16,9 @@ public class Main {
         final String sep = "-".repeat(length) + ("+" + "-".repeat(squareLength)).repeat(x);
 
         for (int i = 0; i <= x; i++) {
-            System.out.printf("%" + length + "s", i == 0 ? "" : i);
+            System.out.printf("%" + length + "s", i == 0 ? "" : i);//%10s
             for (int j = 1; j <= x; j++) {
+
                 System.out.printf("|" + "%" + squareLength + "d", (i == 0 ? 1 : i) * j);
             }
             System.out.println();
@@ -29,15 +28,17 @@ public class Main {
 
     public static int parseArg() {
         Scanner in = new Scanner(System.in);
-        int x;
+        int num;
         try {
-            x = in.nextInt();
+            num = in.nextInt();
+            if (num < 1 || 32 < num) {
+                throw new Exception();
+            }
         } catch (Exception e) {
-            x = 0;
+            System.out.println("Only integer numbers between 1 and 32");
+            return -1;
         }
-        if (x < 1 || 32 < x) {
-            x = 0;
-        }
-        return x;
+
+        return num;
     }
 }
