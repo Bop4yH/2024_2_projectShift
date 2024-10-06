@@ -4,22 +4,20 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int x = parseArg();
-        if (x != 0) {
-            printTable(x);
-        } else {
-            System.out.println("Only integer numbers between 1 and 32");
+        int tableSize = parseArg();
+        if (tableSize != -1) {
+            printTable(tableSize);
         }
     }
 
-    public static void printTable(int x) {
-        final int squareLength = String.valueOf(x * x).length();
-        final int length = String.valueOf(x).length();
-        final String sep = "-".repeat(length) + ("+" + "-".repeat(squareLength)).repeat(x);
+    public static void printTable(int size) {
+        final int squareLength = String.valueOf(size * size).length();
+        final int length = String.valueOf(size).length();
+        final String sep = "-".repeat(length) + ("+" + "-".repeat(squareLength)).repeat(size);
 
-        for (int i = 0; i <= x; i++) {
-            System.out.printf("%" + length + "s", i == 0 ? "" : i);
-            for (int j = 1; j <= x; j++) {
+        for (int i = 0; i <= size; i++) {
+            System.out.printf("%" + length + "s", i == 0 ? "" : i);//%10s
+            for (int j = 1; j <= size; j++) {
                 System.out.printf("|" + "%" + squareLength + "d", (i == 0 ? 1 : i) * j);
             }
             System.out.println();
@@ -29,15 +27,17 @@ public class Main {
 
     public static int parseArg() {
         Scanner in = new Scanner(System.in);
-        int x;
+        int num;
         try {
-            x = in.nextInt();
+            num = in.nextInt();
+            if (num < 1 || 32 < num) {
+                throw new Exception();
+            }
         } catch (Exception e) {
-            x = 0;
+            System.out.println("Only integer numbers between 1 and 32");
+            return -1;
         }
-        if (x < 1 || 32 < x) {
-            x = 0;
-        }
-        return x;
+
+        return num;
     }
 }
